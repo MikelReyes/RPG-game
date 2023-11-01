@@ -1,6 +1,10 @@
-""" Here is some text to add to our assignment. 
-we are just going to make something super simple guys.
+""" File added to git repository"""
 
-"""
-#what is x?
-x = 1 + 1
+class Car:
+    """A car in a dealership
+    
+    Attributes:
+        model (str): the model of the car
+        make (str): the make of the car
+        year (str): the year the car was made"""
+        
