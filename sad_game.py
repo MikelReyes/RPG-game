@@ -67,4 +67,20 @@ def battle():
         pass
     else:
         print("You have died.")
-        
+
+
+
+def parse_args(args):
+    """Parse command-line arguments.
+
+    Args:
+        args (list): Command-line arguments
+
+    Returns:
+        args: The parsed command-line arguments
+    """
+    parser = argparse.ArgumentParser()
+    parser.add_argument("", help="")
+    parser.add_argument("", help="")
+    parser.add_argument("", help="")
+    return parser.parse_args(args)
