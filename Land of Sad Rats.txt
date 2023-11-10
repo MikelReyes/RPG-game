@@ -1,0 +1,69 @@
+Weapons/Powerups:
+
+Flamethrower - throw balls of fire at your enemies, Damage: 20, Range: Medium.
+
+Ratolas (Bow and Arrows) - ranged weapons for attacking from a distance, Damage: 25, Range: Long, Ammo: 20 arrows.
+
+Galvaknucles - electrifying brass knuckles for that shocking touch, Damage: 15, Range: Short.
+
+Invisibility Cloak - become invisible for a short duration, Duration: 10 seconds, Cooldown: 60 seconds.
+
+Excalibur - the legendary sword of kings, Damage: 30, Range: Short.
+
+Storyline: The Land of the Sad Rats
+
+In the land of the Sad Rats, an evil overlord, the Rat King, has arrived. This whiskered tyrant threatens to snatch away all the leftover food left in the realm. As the chosen lone mousekateer, armed with only a humble sword, your quest is to find and conquer the Rat King, save all the leftovers, and decide the fate of the land of the Sad Rats. Your journey begins with a simple blade, but the realm holds greater weapons for a mousekateer of your caliber.
+
+The Call to Adventure
+You stand before the Elder Rat Council, who present you with five distinct paths. Choose wisely, for your decisions will determine the course of your journey.
+
+Path to the Refrigerator:
+Begin with your Sword.
+Embark on a quest to the refrigerator to find the secret stash of leftovers.
+Lead your fellow mousekateers into the heart of the refrigerator to find the Rat King.
+Discover the legendary Exalibur hidden within the frozen food section, enhancing your ranged arsenal.
+
+Path to the Pantry:
+Equip the Staff.
+Seek the guidance of the wise Elder Rats.
+Climb the shelves of the pantry and navigate the maze of food to find the Rat King's Lair.
+Unleash the burning power of the flamethrower, discovered within the pantry's secret chamber.
+
+Path of the Trash:
+Equip with fists.
+Consult with the cunning scavenger rats for intel on the Rat King's movements.
+Traverse the dark and murky sewers, where the Rat King's minions are rumored to gather.
+Discover the shocking Galvaknuckles, hidden beneath a pile of discarded cheese wrappers.
+
+Path of the Attic:
+Equip with nothing.
+Investigate the mysterious attic, filled with forgotten relics and family heirlooms.
+Face unexpected challenges and puzzles to reach the Rat King's hidden lair.
+Find the Invisibility Clock, an ancient artifact with the power to hide from all traps set by the king's minions.
+
+Path to the Garden:
+Equip the Long Bow.
+Brave the treacherous journey through the overgrown garden, infested with rodent minions.
+Overcome nature's obstacles and traps to reach the Rat King's secret burrow.
+Discover Ratolas, the deadly bow and arrow, buried deep within the heart of the garden.
+
+The Climactic Battle
+Your chosen path leads you to the heart of the Rat King's lair. The fate of the land of the Sad Rats hangs in the balance. Your actions in the final battle will determine the outcome.
+
+Victory:
+Successfully defeat the Rat King using your chosen path.
+Reclaim the leftovers and restore happiness to the realm of the Sad Rats.
+Be celebrated as the legendary mousekateer who saved the land.
+
+
+Stalemate:
+The battle ends in a stalemate, with both you and the Rat King severely weakened.
+The leftovers remain in jeopardy, and the Sad Rats face ongoing uncertainty. (Time to upgrade that arsenal for the rematch.)
+
+Defeat:
+Fail to overcome the Rat King's forces.
+Witness the realm fall into despair as the Rat King claims all the leftovers.
+The Sad Rats face a bleak future without their precious food stash. (Perhaps a second chance will come with newfound weapons and determination.)
+
+Outcome
+The choices you make will decide the fate of the land of the Sad Rats. May your journey be filled with unexpected discoveries, brave mousekateer!
