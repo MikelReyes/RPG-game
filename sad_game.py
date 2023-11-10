@@ -165,8 +165,13 @@ def parse_args(args):
     Returns:
         args: The parsed command-line arguments
     """
-    parser = argparse.ArgumentParser()
-    parser.add_argument("", help="")
-    parser.add_argument("", help="")
-    parser.add_argument("", help="")
+    parser = argparse.ArgumentParser(description="Turn-based adventure game with character choices.")
+    parser.add_argument("--name", type=str, help="Name of the player character.")
+    parser.add_argument("--class", type=str, choices=["Wizard", "Fighter", "Warrior", "Archer"],
+                        help="Choose a character class.")
+    parser.add_argument("--weapon", type=str, help="Choose a starting weapon.")
+    parser.add_argument("--skill", type=str, help="Choose a special skill for your character.")
+    parser.add_argument("--speed", type=int, help="Set the speed attribute for your character.")
+    parser.add_argument("--moves", type=int, help="Set the number of moves your character can make.")
+    
     return parser.parse_args(args)
