@@ -125,7 +125,6 @@ class Character:
         self.hp = hp
         self.damage = damage
         self.weapon = weapon
-        self.skill = skill
         self.speed = speed
         self.moves = moves
         
@@ -181,12 +180,13 @@ def parse_args(args):
         args: The parsed command-line arguments
     """
     parser = argparse.ArgumentParser(description="Turn-based adventure game with character choices.")
-    parser.add_argument("--name", type=str, help="Name of the player character.")
-    parser.add_argument("--class", type=str, choices=["Wizard", "Fighter", "Warrior", "Archer"],
+    parser.add_argument("--name", type=str, help="Name of the mousekateer.")
+    parser.add_argument("--class", type=str, choices=["MagicRat", "RatFu", "SharpRat", "ShootyRat", "NakedRat"],
                         help="Choose a character class.")
-    parser.add_argument("--weapon", type=str, help="Choose a starting weapon.")
-    parser.add_argument("--skill", type=str, help="Choose a special skill for your character.")
-    parser.add_argument("--speed", type=int, help="Set the speed attribute for your character.")
-    parser.add_argument("--moves", type=int, help="Set the number of moves your character can make.")
+    parser.add_argument("--hp", type=int, help="Level of health for the mousekateer.")
+    parser.add_argument("--damage", type=int, help="The amount of damage a character takes.")
+    parser.add_argument("--weapon", type=str, help="Choose the weapon for the mousekateer.")
+    parser.add_argument("--speed", type=int, help="Set the speed for the mousekateer.")
+    parser.add_argument("--moves", type=int, help="Set the number of moves the mousekateer can make.")
     
     return parser.parse_args(args)
