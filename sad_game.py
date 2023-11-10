@@ -109,9 +109,6 @@ class NakedRat(Character):
 
         
     
-        
-            
-    
 class Character:
     """Its a character, all right. 
     Attributes:
