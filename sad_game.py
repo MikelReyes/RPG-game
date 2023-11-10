@@ -1,15 +1,101 @@
+import sys
+import argparse
+import random
+import math
+
 """ File added to git repository"""
 
 
 """ A turn based adventure game where the character will make choices that affect their final battle with the big boss
 """
-class Car: #### WHY DO WE HAVE A CAR IN HERE???
-    """A car in a dealership
+class Character:
+    def __init__(self, name, health=100):
+        self.name = name
+        self.health = health
+
+    def attack(self):
+        pass
+
+    def defend(self):
+        pass
+
+
+class Wizard(Character):
+    def __init__(self, name, staff_material="Wood", has_flamethrower=False):
+        super().__init__(name)
+        self.weapon = f"Staff ({staff_material})"
+        self.has_flamethrower = has_flamethrower
+
+    def cast_spell(self):
+        print(f"{self.name} casts a spell!")
+
+    def use_flamethrower(self):
+        if self.has_flamethrower:
+            print(f"{self.name} shoots flames using a flamethrower!")
+        else:
+            print(f"{self.name} does not have a flamethrower!")
+
+
+class Fighter(Character):
+    def __init__(self, name, has_galvaknuckles=False):
+        super().__init__(name)
+        self.weapon = "Fists"
+        self.has_galvaknuckles = has_galvaknuckles
+
+    def punch(self):
+        if self.has_galvaknuckles:
+            print(f"{self.name} delivers an electrically charged punch with Galvaknuckles!")
+        else:
+            print(f"{self.name} throws a powerful punch!")
+
+    def use_galvaknuckles(self):
+        if self.has_galvaknuckles:
+            print(f"{self.name} activates Galvaknuckles!")
+        else:
+            print(f"{self.name} does not have Galvaknuckles!")
+
+
+class Warrior(Character):
+    def __init__(self, name, sword_material="Steel", has_excalibur=False):
+        super().__init__(name)
+        self.weapon = f"Sword ({sword_material})"
+        self.has_excalibur = has_excalibur
+
+    def swing_sword(self):
+        if self.has_excalibur:
+            print(f"{self.name} swings Excalibur with incredible power!")
+        else:
+            print(f"{self.name} swings the sword with precision.")
+
+    def use_excalibur(self):
+        if self.has_excalibur:
+            print(f"{self.name} wields the mighty Excalibur!")
+        else:
+            print(f"{self.name} does not have Excalibur!")
+
+
+class Archer(Character):
+    def __init__(self, name, bow_type="Longbow", has_ratolas=False):
+        super().__init__(name)
+        self.weapon = f"Bow ({bow_type})"
+        self.has_ratolas = has_ratolas
+
+    def shoot_arrow(self):
+        if self.has_ratolas:
+            print(f"{self.name} shoots an arrow with the sacred bow Ratolas!")
+        else:
+            print(f"{self.name} shoots an arrow with accuracy.")
+
+    def use_ratolas(self):
+        if self.has_ratolas:
+            print(f"{self.name} draws the sacred bow Ratolas!")
+        else:
+            print(f"{self.name} does not have the sacred bow Ratolas!")
+
+        
     
-    Attributes:
-        model (str): the model of the car
-        make (str): the make of the car
-        year (str): the year the car was made"""
+        
+            
     
 class Character:
     """Its a character, all right. 
