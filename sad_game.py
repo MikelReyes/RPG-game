@@ -20,7 +20,7 @@ class Character:
         pass
 
 
-class Wizard(Character):
+class MagicRat(Character):
     def __init__(self, name, staff_material="Wood", has_flamethrower=False):
         super().__init__(name)
         self.weapon = f"Staff ({staff_material})"
@@ -36,7 +36,7 @@ class Wizard(Character):
             print(f"{self.name} does not have a flamethrower!")
 
 
-class Fighter(Character):
+class RatFu(Character):
     def __init__(self, name, has_galvaknuckles=False):
         super().__init__(name)
         self.weapon = "Fists"
@@ -55,7 +55,7 @@ class Fighter(Character):
             print(f"{self.name} does not have Galvaknuckles!")
 
 
-class Warrior(Character):
+class SharpRat(Character):
     def __init__(self, name, sword_material="Steel", has_excalibur=False):
         super().__init__(name)
         self.weapon = f"Sword ({sword_material})"
@@ -74,7 +74,7 @@ class Warrior(Character):
             print(f"{self.name} does not have Excalibur!")
 
 
-class Archer(Character):
+class ShootyRat(Character):
     def __init__(self, name, bow_type="Longbow", has_ratolas=False):
         super().__init__(name)
         self.weapon = f"Bow ({bow_type})"
@@ -91,6 +91,21 @@ class Archer(Character):
             print(f"{self.name} draws the sacred bow Ratolas!")
         else:
             print(f"{self.name} does not have the sacred bow Ratolas!")
+            
+class NakedRat(Character):
+    def __init__(self, name, has_invisibility_cloak=False):
+        super().__init__(name)
+        self.weapon = None
+        self.has_invisibility_cloak = has_invisibility_cloak
+
+    def dance(self):
+        print(f"{self.name} performs a lively dance!")
+
+    def use_invisibility_cloak(self):
+        if self.has_invisibility_cloak:
+            print(f"{self.name} puts on the invisibility cloak and disappears!")
+        else:
+            print(f"{self.name} does not have an invisibility cloak!")
 
         
     
