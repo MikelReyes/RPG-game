@@ -1,15 +1,64 @@
+import sys
+import argparse
+import random
+import math
+
 """ File added to git repository"""
 
 
 """ A turn based adventure game where the character will make choices that affect their final battle with the big boss
 """
-class Car: #### WHY DO WE HAVE A CAR IN HERE???
-    """A car in a dealership
+class Character:
+    def __init__(self, name, health=100):
+        self.name = name
+        self.health = health
+
+    def attack(self):
+        pass
+
+    def defend(self):
+        pass
+
+
+class Wizard(Character):
+    def __init__(self, name, staff_material="Wood"):
+        super().__init__(name)
+        self.weapon = f"Staff ({staff_material})"
+
+    def cast_spell(self):
+        print(f"{self.name} casts a spell!")
+
+
+class Fighter(Character):
+    def __init__(self, name):
+        super().__init__(name)
+        self.weapon = "Fists"
+
+    def punch(self):
+        print(f"{self.name} throws a powerful punch!")
+
+
+class Warrior(Character):
+    def __init__(self, name, sword_material="Steel"):
+        super().__init__(name)
+        self.weapon = f"Sword ({sword_material})"
+
+    def swing_sword(self):
+        print(f"{self.name} swings the sword with precision!")
+
+
+class Archer(Character):
+    def __init__(self, name, bow_type="Longbow"):
+        super().__init__(name)
+        self.weapon = f"Bow ({bow_type})"
+
+    def shoot_arrow(self):
+        print(f"{self.name} shoots an arrow with accuracy!")
+
+        
     
-    Attributes:
-        model (str): the model of the car
-        make (str): the make of the car
-        year (str): the year the car was made"""
+        
+            
     
 class Character:
     """Its a character, all right. 
