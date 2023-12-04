@@ -37,7 +37,7 @@ class Character:
                 print("Enter a number for the attack.")
                 
     def alive(self):
-        return self.health
+        return self.health > 0
         
 
 
@@ -133,7 +133,7 @@ class ShootyRat(Character):
             print(f"{self.name} does not have the sacred bow Ratolas!")
             
 class NakedRat(Character):
-    def __init__(self, name, has_invisibility_cloak=False, health=100):
+    def __init__(self, name, has_invisibility_cloak=True, health=100):
         super().__init__(name)
         self.weapon = None
         self.has_invisibility_cloak = has_invisibility_cloak
@@ -143,7 +143,7 @@ class NakedRat(Character):
         print(f"{self.name} performs a lively dance!")
 
     def use_invisibility_cloak(self):
-        if self.has_invisibility_cloak:
+        if self.has_invisibility_cloak is True:
             print(f"{self.name} puts on the invisibility cloak and disappears!")
             self.attacks.append(Attack("Assasinate", power=randint(100, 105)))
         else:
@@ -174,7 +174,7 @@ class Turn:
         damage_dealt = int(chosen_attack.power)
         self.target.health -= damage_dealt
         
-        print(f"{self.attacker.name} uses {chosen_attack.name}! {self.target.name} took {damage_dealt} damage!")
+        print(f"{self.attacker.name} uses {chosen_attack.name}! {self.target.name} took {damage_dealt} damage! \n \n")
         
           
 class Battle():
@@ -205,6 +205,7 @@ class Battle():
         self.battle_status()
         self.player_choice()
         self.rat_king_choice()
+        
         
     def battle_status(self):
         print(f"{self.hero.name} (Health: {self.hero.health}) // {self.rat_king.name} (Health: {self.rat_king.health})")
