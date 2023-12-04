@@ -196,8 +196,6 @@ class Battle():
         
         if self.hero.alive():
             print("The Rat King has been defeated. You have won!")
-            
-
         else:
             print("You have died.")
             
@@ -248,23 +246,46 @@ def parse_args(args):
     
     return parser.parse_args(args)
 
-if __name__ == "__main__":
-    args = parse_args(sys.argv[1:])
-    character_class = args.character_class
-    if character_class == "MagicRat":
-        player = MagicRat(args.name)
-    elif character_class == "RatFu":
-        player = RatFu(args.name)
-    elif character_class == "SharpRat":
-        player = SharpRat(args.name)
-    elif character_class == "ShootyRat":
-        player = ShootyRat(args.name)
-    elif character_class == "NakedRat":
-        player = NakedRat(args.name)
-    else:
-        print("Invalid character class.")
+def restart_game():
+    print("\nDo you want to restart the game?")
+    while True:
+        try:
+            restart_choice = input("Enter 'yes' to restart or 'no' to quit: ").lower()
+            if restart_choice == 'yes':
+                return True
+            elif restart_choice == 'no':
+                print("Goodbye!")
+                sys.exit()
+            else:
+                print("Invalid choice. Enter 'yes' or 'no'.")
+        except ValueError:
+            print("Invalid input. Enter 'yes' or 'no'.")
 
-    
+if __name__ == "__main__":
+    while True:
+        args = parse_args(sys.argv[1:])
+        character_class = args.character_class
+        if character_class == "MagicRat":
+            player = MagicRat(args.name)
+        elif character_class == "RatFu":
+            player = RatFu(args.name)
+        elif character_class == "SharpRat":
+            player = SharpRat(args.name)
+        elif character_class == "ShootyRat":
+            player = ShootyRat(args.name)
+        elif character_class == "NakedRat":
+            player = NakedRat(args.name)
+        else:
+            print("Invalid character class.")
+
+        enemy = RatKing()
+
+        battle_instance = Battle(player, enemy)
+        battle_instance.start_battle()
+
+        if not restart_game():
+            break
+            
     enemy = RatKing()
         
     battle_instance = Battle(player, enemy)
