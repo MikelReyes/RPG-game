@@ -42,12 +42,13 @@ class Character:
 
 
 class MagicRat(Character):
-    def __init__(self, name, staff_material="Wood", has_flamethrower=False):
+    def __init__(self, name, staff_material="Wood", has_flamethrower=False, health=100):
         super().__init__(name)
         self.weapon = f"Staff ({staff_material})"
         self.has_flamethrower = has_flamethrower
         self.attacks.append(Attack("Magic Icicle", power=randint(8, 20)))
         self.attacks.append(Attack("Pebble Blast", power=randint(15, 18)))
+        self.health = health
 
     def cast_spell(self):
         spell = self.attacks[-1]
@@ -60,15 +61,18 @@ class MagicRat(Character):
             self.attacks.append(Attack("Flamethrower", power=randint(60, 100)))
         else:
             print(f"{self.name} does not have a flamethrower!")
+            
+    
 
 
 class RatFu(Character):
-    def __init__(self, name, has_galvaknuckles=False):
+    def __init__(self, name, has_galvaknuckles=False, health=100):
         super().__init__(name)
         self.weapon = "Fists"
         self.has_galvaknuckles = has_galvaknuckles
         self.attacks.append(Attack("Upper Cut", power=randint(15, 18)))
         self.attacks.append(Attack("Consecutive Serious Punches", power=randint(8, 18)))
+        self.health = health
 
     def punch(self):
         if self.has_galvaknuckles:
@@ -84,12 +88,13 @@ class RatFu(Character):
             print(f"{self.name} does not have Galvaknuckles!")
 
 class SharpRat(Character):
-    def __init__(self, name, sword_material="Steel", has_excalibur=False):
+    def __init__(self, name, sword_material="Steel", has_excalibur=False, health=100):
         super().__init__(name)
         self.weapon = f"Sword ({sword_material})"
         self.has_excalibur = has_excalibur
         self.attacks.append(Attack("Quick Slash", power=randint(10, 18)))
         self.attacks.append(Attack("Stab", power=randint(7, 15)))
+        self.health = health
         
     def swing_sword(self):
         if self.has_excalibur:
@@ -106,12 +111,13 @@ class SharpRat(Character):
 
 
 class ShootyRat(Character):
-    def __init__(self, name, bow_type="Longbow", has_ratolas=False):
+    def __init__(self, name, bow_type="Longbow", has_ratolas=False, health=100):
         super().__init__(name)
         self.weapon = f"Bow ({bow_type})"
         self.has_ratolas = has_ratolas
         self.attacks.append(Attack("Bow Shot", power=randint(12, 19)))
         self.attacks.append(Attack("Precise Shot", power=randint(18,20)))
+        self.health = health
 
     def shoot_arrow(self):
         if self.has_ratolas:
@@ -127,10 +133,11 @@ class ShootyRat(Character):
             print(f"{self.name} does not have the sacred bow Ratolas!")
             
 class NakedRat(Character):
-    def __init__(self, name, has_invisibility_cloak=False):
+    def __init__(self, name, has_invisibility_cloak=False, health=100):
         super().__init__(name)
         self.weapon = None
         self.has_invisibility_cloak = has_invisibility_cloak
+        self.health = health
 
     def dance(self):
         print(f"{self.name} performs a lively dance!")
@@ -148,6 +155,7 @@ class RatKing(Character):
         self.attacks.append(Attack("Great Scythe", power=20))
         self.attacks.append(Attack("Intimidate", power=0))
         self.attacks.append(Attack("Throw Cheese", power=5))
+        self.health = health
          
 class Turn:
     """Making the turn-based combat system
@@ -174,7 +182,7 @@ class Battle():
     Args(): IDK YET 
     
     Returns:
-    Who will win the big battle? Will you beat this game? Probably.
+    Who will win the big battle? Will you beat this game? Probably not.
     """
     
     def __init__(self, hero, rat_king):
@@ -207,7 +215,7 @@ class Battle():
         
         while True:
             try:
-                choice =self.hero.choose_attack()
+                choice =self.hero.choose_attacks()
                 turn = Turn(self.hero, self.rat_king)
                 turn.attack(choice)
                 break      
@@ -233,7 +241,7 @@ def parse_args(args):
     parser.add_argument("--name", type=str, help="Name of the mousekateer.")
     parser.add_argument("--character_class", type=str, choices=["MagicRat", "RatFu", "SharpRat", "ShootyRat", "NakedRat"],
                         help="Choose a character class.")
-    parser.add_argument("--hp", type=int, help="Level of health for the mousekateer.")
+    parser.add_argument("--health", type=int, help="Level of health for the mousekateer.")
     parser.add_argument("--damage", type=int, help="The amount of damage a character takes.")
     parser.add_argument("--weapon", type=str, help="Choose the weapon for the mousekateer.")
     
@@ -254,10 +262,7 @@ if __name__ == "__main__":
         player = NakedRat(args.name)
     else:
         print("Invalid character class.")
-        
-    player.health = args.hp
-    player.damage = args.damage
-    player.weapon = args.weapon
+
     
     enemy = RatKing()
         
