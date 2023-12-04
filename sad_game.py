@@ -185,11 +185,13 @@ class Battle():
     Who will win the big battle? Will you beat this game? Probably not.
     """
     
-    def __init__(self, hero, rat_king):
+    def __init__(self, hero, rat_king, story):
         self.hero = hero
         self.rat_king = rat_king
+        self.story = story
         
-    def start_battle(self):    
+    def start_battle(self):   
+        print(self.story) 
         print(f"{self.hero.name} approaches the Rat King and readies their {self.hero.weapon}")
         while self.hero.alive() and self.rat_king.alive():
             self.turn()
@@ -249,6 +251,8 @@ def parse_args(args):
     return parser.parse_args(args)
 
 if __name__ == "__main__":
+    with open('Land_of_Sad_Rats.txt', 'r') as file:
+        Land_of_Sad_Rats = file.read().strip()
     args = parse_args(sys.argv[1:])
     character_class = args.character_class
     if character_class == "MagicRat":
@@ -267,5 +271,5 @@ if __name__ == "__main__":
     
     enemy = RatKing()
         
-    battle_instance = Battle(player, enemy)
+    battle_instance = Battle(player, enemy, story=Land_of_Sad_Rats)
     battle_instance.start_battle()
