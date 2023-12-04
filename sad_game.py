@@ -70,8 +70,8 @@ class RatFu(Character):
         super().__init__(name)
         self.weapon = "Fists"
         self.has_galvaknuckles = has_galvaknuckles
-        self.attacks.append(Attack("Upper Cut", power=randint(15, 18)))
-        self.attacks.append(Attack("Consecutive Serious Punches", power=randint(8, 18)))
+        self.attacks.append(Attack("Upper Cut", power=randint(19, 25)))
+        self.attacks.append(Attack("Consecutive Serious Punches", power=randint(15, 18)))
         self.health = health
 
     def punch(self):
@@ -156,75 +156,141 @@ class RatKing(Character):
         self.attacks.append(Attack("Intimidate", power=0))
         self.attacks.append(Attack("Throw Cheese", power=5))
         self.health = health
+        
+class Shifu(Character):
+    def __init__(self, name="Shifu", health=50):
+        super().__init__(name, health)
+        self.attacks.append(Attack("Kung Fu Kick", power=randint(7, 11)))
+        self.attacks.append(Attack("Dragon Palm Strike", power=randint(10, 12)))
+
+class Splinter(Character):
+    def __init__(self, name="Splinter", health=40):
+        super().__init__(name, health)
+        self.attacks.append(Attack("Tail Swipe", power=randint(10, 11)))
+        self.attacks.append(Attack("Ninja Strike", power=randint(8, 10)))
+
          
 class Turn:
-    """Making the turn-based combat system
-    Attributes:
-    __init__():
-    attack(int): to damage the other character
-    
-    Side effects: reduce hp of of the target
-    """
     def __init__(self, attacker, target):
         self.attacker = attacker
         self.target = target
-        
+
     def attack(self, attack_choice):
         chosen_attack = self.attacker.attacks[attack_choice - 1]
         damage_dealt = int(chosen_attack.power)
         self.target.health -= damage_dealt
-        
+
         print(f"{self.attacker.name} uses {chosen_attack.name}! {self.target.name} took {damage_dealt} damage! \n \n")
         
-          
-class Battle():
-    """FIGHT!
-    Args(): IDK YET 
-    
-    Returns:
-    Who will win the big battle? Will you beat this game? Probably not.
-    """
-    
+class Battle:
     def __init__(self, hero, rat_king):
         self.hero = hero
         self.rat_king = rat_king
-        
-    def start_battle(self):    
-        print(f"{self.hero.name} approaches the Rat King and readies their {self.hero.weapon}")
-        while self.hero.alive() and self.rat_king.alive():
-            self.turn()
-        
+        self.mini_bosses = [Shifu(), Splinter()]
+        self.current_enemy = None
+
+    def start_battle(self):
+        print(f"{self.hero.name} embarks on the journey to defeat the Rat King.")
+
+        for mini_boss in self.mini_bosses:
+            self.current_enemy = mini_boss
+            self.battle_instance()
+            if not self.hero.alive():
+                print("You have died.")
+                if not restart_game():
+                    sys.exit()
+            else:
+                print(f"{mini_boss.name} has been defeated. Prepare for the next challenge!")
+
+        print(f"{self.hero.name} finally reaches the Rat King and readies their {self.hero.weapon}")
+        self.current_enemy = self.rat_king
+        self.battle_instance()
+
         if self.hero.alive():
             print("The Rat King has been defeated. You have won!")
         else:
             print("You have died.")
-            
+
+    def battle_instance(self):
+        while self.hero.alive() and self.current_enemy.alive():
+            self.turn()
+
     def turn(self):
         self.battle_status()
         self.player_choice()
-        self.rat_king_choice()
-        
-        
-    def battle_status(self):
-        print(f"{self.hero.name} (Health: {self.hero.health}) // {self.rat_king.name} (Health: {self.rat_king.health})")
-        
+        self.enemy_choice()
+
+    def battle_status(self): 
+        print(f"{self.hero.name} (Health: {self.hero.health}) // {self.current_enemy.name} (Health: {self.current_enemy.health})")
+
     def player_choice(self):
         print(f"{self.hero.name}'s turn:")
         self.hero.show_attacks()
-        
+
         while True:
             try:
-                choice =self.hero.choose_attacks()
-                turn = Turn(self.hero, self.rat_king)
+                choice = self.hero.choose_attacks()
+                turn = Turn(self.hero, self.current_enemy)
                 turn.attack(choice)
-                break      
+                break
             except ValueError:
                 print("Enter a number for the attack.")
-                
-    def rat_king_choice(self):
-        choice = randint(1, len(self.rat_king.attacks))
-        turn = Turn(self.rat_king, self.hero)
+
+    def enemy_choice(self):
+        choice = randint(1, len(self.current_enemy.attacks))
+        turn = Turn(self.current_enemy, self.hero)
         turn.attack(choice)
+
+
+          
+# class Battle():
+#     """FIGHT!
+#     Args(): IDK YET 
+    
+#     Returns:
+#     Who will win the big battle? Will you beat this game? Probably not.
+#     """
+    
+#     def __init__(self, hero, rat_king):
+#         self.hero = hero
+#         self.rat_king = rat_king
+        
+#     def start_battle(self):    
+#         print(f"{self.hero.name} approaches the Rat King and readies their {self.hero.weapon}")
+#         while self.hero.alive() and self.rat_king.alive():
+#             self.turn()
+        
+#         if self.hero.alive():
+#             print("The Rat King has been defeated. You have won!")
+#         else:
+#             print("You have died.")
+            
+#     def turn(self):
+#         self.battle_status()
+#         self.player_choice()
+#         self.rat_king_choice()
+        
+        
+#     def battle_status(self):
+#         print(f"{self.hero.name} (Health: {self.hero.health}) // {self.rat_king.name} (Health: {self.rat_king.health})")
+        
+#     def player_choice(self):
+#         print(f"{self.hero.name}'s turn:")
+#         self.hero.show_attacks()
+        
+#         while True:
+#             try:
+#                 choice =self.hero.choose_attacks()
+#                 turn = Turn(self.hero, self.rat_king)
+#                 turn.attack(choice)
+#                 break      
+#             except ValueError:
+#                 print("Enter a number for the attack.")
+                
+#     def rat_king_choice(self):
+#         choice = randint(1, len(self.rat_king.attacks))
+#         turn = Turn(self.rat_king, self.hero)
+#         turn.attack(choipce)
 
 
 def parse_args(args):
