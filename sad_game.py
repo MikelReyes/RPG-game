@@ -54,6 +54,7 @@ class MagicRat(Character):
     def use_flamethrower(self):
         if self.has_flamethrower:
             print(f"{self.name} shoots flames using a flamethrower!")
+            self.attacks.append(Attack("Flamethrower", power=randint(60, 100)))
         else:
             print(f"{self.name} does not have a flamethrower!")
 
@@ -69,6 +70,7 @@ class RatFu(Character):
     def punch(self):
         if self.has_galvaknuckles:
             print(f"{self.name} delivers an electrically charged punch with Galvaknuckles!")
+            self.attacks.append(Attack("Galvaknuckle Punch", power=randint(60, 100)))
         else:
             print(f"{self.name} throws a powerful punch!")
 
@@ -95,6 +97,7 @@ class SharpRat(Character):
     def use_excalibur(self):
         if self.has_excalibur:
             print(f"{self.name} wields the mighty Excalibur!")
+            self.attacks.append(Attack("Holy Strike", power=randint(60, 100)))
         else:
             print(f"{self.name} does not have Excalibur!")
 
@@ -116,6 +119,7 @@ class ShootyRat(Character):
     def use_ratolas(self):
         if self.has_ratolas:
             print(f"{self.name} draws the sacred bow Ratolas!")
+            self.attacks.append(Attack("Elven Shot", power=randint(60, 100)))
         else:
             print(f"{self.name} does not have the sacred bow Ratolas!")
             
@@ -131,6 +135,7 @@ class NakedRat(Character):
     def use_invisibility_cloak(self):
         if self.has_invisibility_cloak:
             print(f"{self.name} puts on the invisibility cloak and disappears!")
+            self.attacks.append(Attack("Assasinate", power=randint(100, 105)))
         else:
             print(f"{self.name} does not have an invisibility cloak!")
 
