@@ -183,13 +183,17 @@ class Turn:
         print(f"{self.attacker.name} uses {chosen_attack.name}! {self.target.name} took {damage_dealt} damage! \n \n")
         
 class Battle:
-    def __init__(self, hero, rat_king):
+    def __init__(self, hero, rat_king, story=None):
         self.hero = hero
         self.rat_king = rat_king
         self.mini_bosses = [Shifu(), Splinter()]
+        self.story = story
         self.current_enemy = None
 
     def start_battle(self):
+        if self.story:
+            print(self.story)
+
         print(f"{self.hero.name} embarks on the journey to defeat the Rat King.")
 
         for mini_boss in self.mini_bosses:
@@ -206,11 +210,6 @@ class Battle:
         self.current_enemy = self.rat_king
         self.battle_instance()
 
-        if self.hero.alive():
-            print("The Rat King has been defeated. You have won!")
-        else:
-            print("You have died.")
-
     def battle_instance(self):
         while self.hero.alive() and self.current_enemy.alive():
             self.turn()
@@ -220,7 +219,7 @@ class Battle:
         self.player_choice()
         self.enemy_choice()
 
-    def battle_status(self): 
+    def battle_status(self):
         print(f"{self.hero.name} (Health: {self.hero.health}) // {self.current_enemy.name} (Health: {self.current_enemy.health})")
 
     def player_choice(self):
@@ -354,5 +353,5 @@ if __name__ == "__main__":
             
     enemy = RatKing()
         
-    battle_instance = Battle(player, enemy)
+    battle_instance = Battle(player, enemy, story=Land_of_Sad_Rats)
     battle_instance.start_battle()
