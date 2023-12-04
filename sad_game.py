@@ -35,6 +35,9 @@ class Character:
                     print("Choose a valid attack.")
             except ValueError:
                 print("Enter a number for the attack.")
+                
+    def alive(self):
+        return self.health
         
 
 
