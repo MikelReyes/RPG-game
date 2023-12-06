@@ -19,6 +19,10 @@ class Character:
         self.health = health
         self.attacks = [Attack("Bite", power=10)]
 
+    def storyline():
+        with open("SadRats.txt", "r") as f:
+            storyline = f.read().strip()
+            print("\n", storyline)
 
     def show_attacks(self):
         print(f"{self.name}'s available attacks:")
@@ -50,8 +54,8 @@ class MagicRat(Character):
         self.attacks.append(Attack("Pebble Blast", power=randint(15, 18)))
         self.health = health
         with open("MagicRat.txt", "r") as f:
-            MagicRat = f.read().strip()
-        print(MagicRat)
+            mr_story = f.read().strip()
+        print("\n", mr_story)
     
 
     def cast_spell(self):
@@ -78,8 +82,8 @@ class RatFu(Character):
         self.attacks.append(Attack("Consecutive Serious Punches", power=randint(8, 18)))
         self.health = health
         with open("RatFu.txt", 'r') as f:
-            RatFu = f.read().strip()
-        print(RatFu)
+            rf_story = f.read().strip()
+        print("\n", rf_story)
 
 
 
@@ -105,8 +109,8 @@ class SharpRat(Character):
         self.attacks.append(Attack("Stab", power=randint(7, 15)))
         self.health = health
         with open("SharpRat.txt", 'r') as f:
-            SharpRat = f.read().strip()
-        print(SharpRat)
+            sr_story = f.read().strip()
+        print("\n", sr_story)
         
         
     def swing_sword(self):
@@ -132,8 +136,8 @@ class ShootyRat(Character):
         self.attacks.append(Attack("Precise Shot", power=randint(18,20)))
         self.health = health
         with open("ShootyRat.txt", 'r') as f:
-            ShootyRat = f.read().strip()
-        print(ShootyRat)
+            sr_story = f.read().strip()
+        print("\n", sr_story)
 
     
 
@@ -153,12 +157,12 @@ class ShootyRat(Character):
 class NakedRat(Character):
     def __init__(self, name, has_invisibility_cloak=True, health=100):
         super().__init__(name)
-        self.weapon = None
+        self.weapon = f"Nakedness"
         self.has_invisibility_cloak = has_invisibility_cloak
         self.health = health
         with open("NakedRat.txt", 'r') as f:
-            NakedRat = f.read().strip()
-        print(NakedRat)
+            nr_story = f.read().strip()
+        print("\n", nr_story)
 
 
     def dance(self):
@@ -275,6 +279,7 @@ def parse_args(args):
     return parser.parse_args(args)
 
 if __name__ == "__main__":
+    Character.storyline()
     args = parse_args(sys.argv[1:])
     character_class = args.character_class
     if character_class == "MagicRat":
