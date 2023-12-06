@@ -353,5 +353,5 @@ if __name__ == "__main__":
             
     enemy = RatKing()
         
-    battle_instance = Battle(player, enemy, story=Land_of_Sad_Rats)
+    battle_instance = Battle(player, enemy,) #story=Land_of_Sad_Rats)
     battle_instance.start_battle()
