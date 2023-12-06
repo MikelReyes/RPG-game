@@ -49,6 +49,10 @@ class MagicRat(Character):
         self.attacks.append(Attack("Magic Icicle", power=randint(8, 20)))
         self.attacks.append(Attack("Pebble Blast", power=randint(15, 18)))
         self.health = health
+        with open("MagicRat.txt", "r") as f:
+            MagicRat = f.read().strip()
+        print(MagicRat)
+    
 
     def cast_spell(self):
         spell = self.attacks[-1]
@@ -73,6 +77,11 @@ class RatFu(Character):
         self.attacks.append(Attack("Upper Cut", power=randint(15, 18)))
         self.attacks.append(Attack("Consecutive Serious Punches", power=randint(8, 18)))
         self.health = health
+        with open("RatFu.txt", 'r') as f:
+            RatFu = f.read().strip()
+        print(RatFu)
+
+
 
     def punch(self):
         if self.has_galvaknuckles:
@@ -95,6 +104,10 @@ class SharpRat(Character):
         self.attacks.append(Attack("Quick Slash", power=randint(10, 18)))
         self.attacks.append(Attack("Stab", power=randint(7, 15)))
         self.health = health
+        with open("SharpRat.txt", 'r') as f:
+            SharpRat = f.read().strip()
+        print(SharpRat)
+        
         
     def swing_sword(self):
         if self.has_excalibur:
@@ -118,6 +131,11 @@ class ShootyRat(Character):
         self.attacks.append(Attack("Bow Shot", power=randint(12, 19)))
         self.attacks.append(Attack("Precise Shot", power=randint(18,20)))
         self.health = health
+        with open("ShootyRat.txt", 'r') as f:
+            ShootyRat = f.read().strip()
+        print(ShootyRat)
+
+    
 
     def shoot_arrow(self):
         if self.has_ratolas:
@@ -138,6 +156,10 @@ class NakedRat(Character):
         self.weapon = None
         self.has_invisibility_cloak = has_invisibility_cloak
         self.health = health
+        with open("NakedRat.txt", 'r') as f:
+            NakedRat = f.read().strip()
+        print(NakedRat)
+
 
     def dance(self):
         print(f"{self.name} performs a lively dance!")
@@ -182,7 +204,7 @@ class Battle():
     Args(): IDK YET 
     
     Returns:
-    Who will win the big battle? Will you beat this game? Probably not.
+    Who will win the big battle? Will you beat this game? Probably.
     """
     
     def __init__(self, hero, rat_king, story):
@@ -198,6 +220,8 @@ class Battle():
         
         if self.hero.alive():
             print("The Rat King has been defeated. You have won!")
+            
+
         else:
             print("You have died.")
             
@@ -245,13 +269,12 @@ def parse_args(args):
     parser.add_argument("--health", type=int, help="Level of health for the mousekateer.")
     parser.add_argument("--damage", type=int, help="The amount of damage a character takes.")
     parser.add_argument("--weapon", type=str, help="Choose the weapon for the mousekateer.")
+    parser.add_argument("--storyline_file", type=str, help="Path to the storyline file.")
+
     
     return parser.parse_args(args)
 
-<<<<<<< HEAD
 if __name__ == "__main__":
-    with open('Land_of_Sad_Rats.txt', 'r') as file:
-        Land_of_Sad_Rats = file.read().strip()
     args = parse_args(sys.argv[1:])
     character_class = args.character_class
     if character_class == "MagicRat":
@@ -266,49 +289,9 @@ if __name__ == "__main__":
         player = NakedRat(args.name)
     else:
         print("Invalid character class.")
-=======
-def restart_game():
-    print("\nDo you want to restart the game?")
-    while True:
-        try:
-            restart_choice = input("Enter 'yes' to restart or 'no' to quit: ").lower()
-            if restart_choice == 'yes':
-                return True
-            elif restart_choice == 'no':
-                print("Goodbye!")
-                sys.exit()
-            else:
-                print("Invalid choice. Enter 'yes' or 'no'.")
-        except ValueError:
-            print("Invalid input. Enter 'yes' or 'no'.")
->>>>>>> 95602b4cb3b2680cb722621f9b24960e8e6c4b96
 
-if __name__ == "__main__":
-    while True:
-        args = parse_args(sys.argv[1:])
-        character_class = args.character_class
-        if character_class == "MagicRat":
-            player = MagicRat(args.name)
-        elif character_class == "RatFu":
-            player = RatFu(args.name)
-        elif character_class == "SharpRat":
-            player = SharpRat(args.name)
-        elif character_class == "ShootyRat":
-            player = ShootyRat(args.name)
-        elif character_class == "NakedRat":
-            player = NakedRat(args.name)
-        else:
-            print("Invalid character class.")
-
-        enemy = RatKing()
-
-        battle_instance = Battle(player, enemy)
-        battle_instance.start_battle()
-
-        if not restart_game():
-            break
-            
+    
     enemy = RatKing()
         
-    battle_instance = Battle(player, enemy, story=Land_of_Sad_Rats)
+    battle_instance = Battle(player, enemy, args.storyline_file)
     battle_instance.start_battle()
