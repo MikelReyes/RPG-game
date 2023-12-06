@@ -49,6 +49,10 @@ class MagicRat(Character):
         self.attacks.append(Attack("Magic Icicle", power=randint(8, 20)))
         self.attacks.append(Attack("Pebble Blast", power=randint(15, 18)))
         self.health = health
+        with open("MagicRat.txt", "r") as f:
+            MagicRat = f.read().strip()
+        print(MagicRat)
+    
 
     def cast_spell(self):
         spell = self.attacks[-1]
@@ -70,9 +74,14 @@ class RatFu(Character):
         super().__init__(name)
         self.weapon = "Fists"
         self.has_galvaknuckles = has_galvaknuckles
-        self.attacks.append(Attack("Upper Cut", power=randint(19, 25)))
-        self.attacks.append(Attack("Consecutive Serious Punches", power=randint(15, 18)))
+        self.attacks.append(Attack("Upper Cut", power=randint(15, 18)))
+        self.attacks.append(Attack("Consecutive Serious Punches", power=randint(8, 18)))
         self.health = health
+        with open("RatFu.txt", 'r') as f:
+            RatFu = f.read().strip()
+        print(RatFu)
+
+
 
     def punch(self):
         if self.has_galvaknuckles:
@@ -95,6 +104,10 @@ class SharpRat(Character):
         self.attacks.append(Attack("Quick Slash", power=randint(10, 18)))
         self.attacks.append(Attack("Stab", power=randint(7, 15)))
         self.health = health
+        with open("SharpRat.txt", 'r') as f:
+            SharpRat = f.read().strip()
+        print(SharpRat)
+        
         
     def swing_sword(self):
         if self.has_excalibur:
@@ -118,6 +131,11 @@ class ShootyRat(Character):
         self.attacks.append(Attack("Bow Shot", power=randint(12, 19)))
         self.attacks.append(Attack("Precise Shot", power=randint(18,20)))
         self.health = health
+        with open("ShootyRat.txt", 'r') as f:
+            ShootyRat = f.read().strip()
+        print(ShootyRat)
+
+    
 
     def shoot_arrow(self):
         if self.has_ratolas:
@@ -138,6 +156,10 @@ class NakedRat(Character):
         self.weapon = None
         self.has_invisibility_cloak = has_invisibility_cloak
         self.health = health
+        with open("NakedRat.txt", 'r') as f:
+            NakedRat = f.read().strip()
+        print(NakedRat)
+
 
     def dance(self):
         print(f"{self.name} performs a lively dance!")
@@ -156,140 +178,79 @@ class RatKing(Character):
         self.attacks.append(Attack("Intimidate", power=0))
         self.attacks.append(Attack("Throw Cheese", power=5))
         self.health = health
-        
-class Shifu(Character):
-    def __init__(self, name="Shifu", health=50):
-        super().__init__(name, health)
-        self.attacks.append(Attack("Kung Fu Kick", power=randint(7, 11)))
-        self.attacks.append(Attack("Dragon Palm Strike", power=randint(10, 12)))
-
-class Splinter(Character):
-    def __init__(self, name="Splinter", health=40):
-        super().__init__(name, health)
-        self.attacks.append(Attack("Tail Swipe", power=randint(10, 11)))
-        self.attacks.append(Attack("Ninja Strike", power=randint(8, 10)))
-
          
 class Turn:
+    """Making the turn-based combat system
+    Attributes:
+    __init__():
+    attack(int): to damage the other character
+    
+    Side effects: reduce hp of of the target
+    """
     def __init__(self, attacker, target):
         self.attacker = attacker
         self.target = target
-
+        
     def attack(self, attack_choice):
         chosen_attack = self.attacker.attacks[attack_choice - 1]
         damage_dealt = int(chosen_attack.power)
         self.target.health -= damage_dealt
-
+        
         print(f"{self.attacker.name} uses {chosen_attack.name}! {self.target.name} took {damage_dealt} damage! \n \n")
         
-class Battle:
-    def __init__(self, hero, rat_king, story=None):
+          
+class Battle():
+    """FIGHT!
+    Args(): IDK YET 
+    
+    Returns:
+    Who will win the big battle? Will you beat this game? Probably.
+    """
+    
+    def __init__(self, hero, rat_king, story):
         self.hero = hero
         self.rat_king = rat_king
-        self.mini_bosses = [Shifu(), Splinter()]
         self.story = story
-        self.current_enemy = None
-
-    def start_battle(self):
-        if self.story:
-            print(self.story)
-
-        print(f"{self.hero.name} embarks on the journey to defeat the Rat King.")
-
-        for mini_boss in self.mini_bosses:
-            self.current_enemy = mini_boss
-            self.battle_instance()
-            if not self.hero.alive():
-                print("You have died.")
-                if not restart_game():
-                    sys.exit()
-            else:
-                print(f"{mini_boss.name} has been defeated. Prepare for the next challenge!")
-
-        print(f"{self.hero.name} finally reaches the Rat King and readies their {self.hero.weapon}")
-        self.current_enemy = self.rat_king
-        self.battle_instance()
-
-    def battle_instance(self):
-        while self.hero.alive() and self.current_enemy.alive():
+        
+    def start_battle(self):   
+        print(self.story) 
+        print(f"{self.hero.name} approaches the Rat King and readies their {self.hero.weapon}")
+        while self.hero.alive() and self.rat_king.alive():
             self.turn()
+        
+        if self.hero.alive():
+            print("The Rat King has been defeated. You have won!")
+            
 
+        else:
+            print("You have died.")
+            
     def turn(self):
         self.battle_status()
         self.player_choice()
-        self.enemy_choice()
-
+        self.rat_king_choice()
+        
+        
     def battle_status(self):
-        print(f"{self.hero.name} (Health: {self.hero.health}) // {self.current_enemy.name} (Health: {self.current_enemy.health})")
-
+        print(f"{self.hero.name} (Health: {self.hero.health}) // {self.rat_king.name} (Health: {self.rat_king.health})")
+        
     def player_choice(self):
         print(f"{self.hero.name}'s turn:")
         self.hero.show_attacks()
-
+        
         while True:
             try:
-                choice = self.hero.choose_attacks()
-                turn = Turn(self.hero, self.current_enemy)
+                choice =self.hero.choose_attacks()
+                turn = Turn(self.hero, self.rat_king)
                 turn.attack(choice)
-                break
+                break      
             except ValueError:
                 print("Enter a number for the attack.")
-
-    def enemy_choice(self):
-        choice = randint(1, len(self.current_enemy.attacks))
-        turn = Turn(self.current_enemy, self.hero)
-        turn.attack(choice)
-
-
-          
-# class Battle():
-#     """FIGHT!
-#     Args(): IDK YET 
-    
-#     Returns:
-#     Who will win the big battle? Will you beat this game? Probably not.
-#     """
-    
-#     def __init__(self, hero, rat_king):
-#         self.hero = hero
-#         self.rat_king = rat_king
-        
-#     def start_battle(self):    
-#         print(f"{self.hero.name} approaches the Rat King and readies their {self.hero.weapon}")
-#         while self.hero.alive() and self.rat_king.alive():
-#             self.turn()
-        
-#         if self.hero.alive():
-#             print("The Rat King has been defeated. You have won!")
-#         else:
-#             print("You have died.")
-            
-#     def turn(self):
-#         self.battle_status()
-#         self.player_choice()
-#         self.rat_king_choice()
-        
-        
-#     def battle_status(self):
-#         print(f"{self.hero.name} (Health: {self.hero.health}) // {self.rat_king.name} (Health: {self.rat_king.health})")
-        
-#     def player_choice(self):
-#         print(f"{self.hero.name}'s turn:")
-#         self.hero.show_attacks()
-        
-#         while True:
-#             try:
-#                 choice =self.hero.choose_attacks()
-#                 turn = Turn(self.hero, self.rat_king)
-#                 turn.attack(choice)
-#                 break      
-#             except ValueError:
-#                 print("Enter a number for the attack.")
                 
-#     def rat_king_choice(self):
-#         choice = randint(1, len(self.rat_king.attacks))
-#         turn = Turn(self.rat_king, self.hero)
-#         turn.attack(choipce)
+    def rat_king_choice(self):
+        choice = randint(1, len(self.rat_king.attacks))
+        turn = Turn(self.rat_king, self.hero)
+        turn.attack(choice)
 
 
 def parse_args(args):
@@ -308,50 +269,29 @@ def parse_args(args):
     parser.add_argument("--health", type=int, help="Level of health for the mousekateer.")
     parser.add_argument("--damage", type=int, help="The amount of damage a character takes.")
     parser.add_argument("--weapon", type=str, help="Choose the weapon for the mousekateer.")
+    parser.add_argument("--storyline_file", type=str, help="Path to the storyline file.")
+
     
     return parser.parse_args(args)
 
-def restart_game():
-    print("\nDo you want to restart the game?")
-    while True:
-        try:
-            restart_choice = input("Enter 'yes' to restart or 'no' to quit: ").lower()
-            if restart_choice == 'yes':
-                return True
-            elif restart_choice == 'no':
-                print("Goodbye!")
-                sys.exit()
-            else:
-                print("Invalid choice. Enter 'yes' or 'no'.")
-        except ValueError:
-            print("Invalid input. Enter 'yes' or 'no'.")
-
 if __name__ == "__main__":
-    while True:
-        args = parse_args(sys.argv[1:])
-        character_class = args.character_class
-        if character_class == "MagicRat":
-            player = MagicRat(args.name)
-        elif character_class == "RatFu":
-            player = RatFu(args.name)
-        elif character_class == "SharpRat":
-            player = SharpRat(args.name)
-        elif character_class == "ShootyRat":
-            player = ShootyRat(args.name)
-        elif character_class == "NakedRat":
-            player = NakedRat(args.name)
-        else:
-            print("Invalid character class.")
+    args = parse_args(sys.argv[1:])
+    character_class = args.character_class
+    if character_class == "MagicRat":
+        player = MagicRat(args.name)
+    elif character_class == "RatFu":
+        player = RatFu(args.name)
+    elif character_class == "SharpRat":
+        player = SharpRat(args.name)
+    elif character_class == "ShootyRat":
+        player = ShootyRat(args.name)
+    elif character_class == "NakedRat":
+        player = NakedRat(args.name)
+    else:
+        print("Invalid character class.")
 
-        enemy = RatKing()
-
-        battle_instance = Battle(player, enemy)
-        battle_instance.start_battle()
-
-        if not restart_game():
-            break
-            
+    
     enemy = RatKing()
         
-    battle_instance = Battle(player, enemy,) #story=Land_of_Sad_Rats)
+    battle_instance = Battle(player, enemy, args.storyline_file)
     battle_instance.start_battle()
