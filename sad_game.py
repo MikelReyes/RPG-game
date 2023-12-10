@@ -6,7 +6,7 @@ import math
 """ File added to git repository"""
 
 
-""" A turn based adventure game where the character will make choices that affect their final battle with the big boss
+""" A turn based adventure game where the character will make choices that affect their final battle with the big boss.
 """
 class Attack:
     def __init__(self, name, power):
@@ -128,12 +128,12 @@ class SharpRat(Character):
 
 
 class ShootyRat(Character):
-    def __init__(self, name, bow_type="Longbow", has_ratolas=False, health=100):
+    def __init__(self, name, bow_type="Glock-o", has_ratolas=False, health=100):
         super().__init__(name)
-        self.weapon = f"Bow ({bow_type})"
+        self.weapon = f"Gun ({bow_type})"
         self.has_ratolas = has_ratolas
-        self.attacks.append(Attack("Bow Shot", power=randint(12, 19)))
-        self.attacks.append(Attack("Precise Shot", power=randint(18,20)))
+        self.attacks.append(Attack("Rat at at at", power=randint(12, 19)))
+        self.attacks.append(Attack("Snipe", power=randint(18,20)))
         self.health = health
         with open("ShootyRat.txt", 'r') as f:
             sr_story = f.read().strip()
@@ -255,6 +255,7 @@ class Battle():
         choice = randint(1, len(self.rat_king.attacks))
         turn = Turn(self.rat_king, self.hero)
         turn.attack(choice)
+        
 
 
 def parse_args(args):
