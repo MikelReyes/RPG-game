@@ -661,7 +661,7 @@ if __name__ == "__main__":
             battle_instance.start_battle()
 
     else:
-        print("Thanks for playing!")
+        print("Battle")
         
     enemy = RatKing()
     battle_instance = Battle(player, enemy, args.storyline_file)
