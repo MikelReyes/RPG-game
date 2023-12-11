@@ -7,7 +7,7 @@ import random
 
 
 """ 
-A turn based adventure game where the character will make choices that affect their final battle with the big boss.
+A turn based adventure game where the mousekateer will make choices that affect their final battle with the big boss.
 
 a quick note on the side: special weapons to be found in the story were added but the team did not have time to fully 
 impliment them in a working fashion. Parts of the code for these still exist but do not currently impact the story or battles.
