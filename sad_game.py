@@ -82,7 +82,7 @@ class Character:
                 if 1 <= len(self.attacks):
                     return choice
                 else:
-                    print("Choose a valid attack.")
+                    raise ValueError("Choose a valid attack.")
             except ValueError:
                 print("Enter a number for the attack.")
                 
@@ -472,7 +472,7 @@ class Battle:
         print(self.story)
 
         
-        for i in range(2):  
+        for i in range(1):  
             self.enemy = self.choose_random_mini_boss()
             print(f"{self.hero.name} approaches {self.enemy.name} and readies their {self.hero.weapon}")
             while self.hero.alive() and self.enemy.alive():
