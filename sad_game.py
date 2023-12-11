@@ -1,7 +1,7 @@
 import sys
 import argparse
-from random import randint
-import math
+from random import randint, choice
+import random
 
 """ File added to git repository"""
 
@@ -43,6 +43,11 @@ class Character:
     def alive(self):
         return self.health > 0
         
+class MiniBoss(Character):
+    def __init__(self, name, health=50):
+        super().__init__(name, health)
+        self.attacks = [Attack("Mini Attack", power=randint(5, 15))]
+
 
 
 class MagicRat(Character):
@@ -174,6 +179,18 @@ class NakedRat(Character):
             self.attacks.append(Attack("Assasinate", power=randint(100, 105)))
         else:
             print(f"{self.name} does not have an invisibility cloak!")
+            
+class MasterSplinter(MiniBoss):
+    def __init__(self, health=50):
+        super().__init__("Master Splinter", health)
+        self.attacks.append(Attack("Ninja Swipe", power=randint(8, 15)))
+        self.attacks.append(Attack("Zen Meditation", power=randint(5, 10)))
+
+class MasterShifu(MiniBoss):
+    def __init__(self, health=50):
+        super().__init__("Master Shifu", health)
+        self.attacks.append(Attack("Kung Fu Kick", power=randint(10, 18)))
+        self.attacks.append(Attack("Inner Peace Palm", power=randint(5, 12)))
 
 class RatKing(Character):
     def __init__(self, name="Rat King", health=100):
@@ -183,6 +200,7 @@ class RatKing(Character):
         self.attacks.append(Attack("Throw Cheese", power=5))
         self.health = health
          
+    
 class Turn:
     """Making the turn-based combat system
     Attributes:
@@ -194,62 +212,83 @@ class Turn:
     def __init__(self, attacker, target):
         self.attacker = attacker
         self.target = target
-        
+
     def attack(self, attack_choice):
         chosen_attack = self.attacker.attacks[attack_choice - 1]
         damage_dealt = int(chosen_attack.power)
         self.target.health -= damage_dealt
-        
+
         print(f"{self.attacker.name} uses {chosen_attack.name}! {self.target.name} took {damage_dealt} damage! \n \n")
         
           
-class Battle():
-    """FIGHT!
-    Args(): IDK YET 
-    
-    Returns:
-    Who will win the big battle? Will you beat this game? Probably.
-    """
-    
-    def __init__(self, hero, rat_king, story):
+class Battle:
+    def __init__(self, hero, enemy, story):
         self.hero = hero
-        self.rat_king = rat_king
+        self.enemy = enemy
         self.story = story
-        
-    def start_battle(self):   
-        print(self.story) 
-        print(f"{self.hero.name} approaches the Rat King and readies their {self.hero.weapon}")
-        while self.hero.alive() and self.rat_king.alive():
-            self.turn()
-        
-        if self.hero.alive():
-            print("The Rat King has been defeated. You have won!")
-            
+        self.original_enemy = enemy  # Store the original enemy for restart
 
+    def start_battle(self):
+        print(self.story)
+
+        # Fight Mini Bosses first
+        for _ in range(2):  # Adjust the number of mini-boss battles as needed
+            self.enemy = self.choose_random_mini_boss()
+            print(f"{self.hero.name} approaches {self.enemy.name} and readies their {self.hero.weapon}")
+            while self.hero.alive() and self.enemy.alive():
+                self.turn()
+            if not self.hero.alive():
+                print("You have died. Game Over.")
+                return
+
+        # Proceed to Rat King
+        self.enemy = self.original_enemy
+        print(f"{self.hero.name} approaches the {self.enemy.name} and readies their {self.hero.weapon}")
+        while self.hero.alive() and self.enemy.alive():
+            self.turn()
+
+        if self.hero.alive():
+            print(f"The {self.enemy.name} has been defeated. You have won!")
         else:
-            print("You have died.")
-            
+            print("You have died. Game Over.")
+
     def turn(self):
         self.battle_status()
         self.player_choice()
-        self.rat_king_choice()
-        
-        
+        self.enemy_choice()
+
     def battle_status(self):
-        print(f"{self.hero.name} (Health: {self.hero.health}) // {self.rat_king.name} (Health: {self.rat_king.health})")
-        
+        print(f"{self.hero.name} (Health: {self.hero.health}) // {self.enemy.name} (Health: {self.enemy.health})")
+
     def player_choice(self):
         print(f"{self.hero.name}'s turn:")
         self.hero.show_attacks()
-        
         while True:
             try:
-                choice =self.hero.choose_attacks()
-                turn = Turn(self.hero, self.rat_king)
+                choice = self.hero.choose_attacks()
+                turn = Turn(self.hero, self.enemy)
                 turn.attack(choice)
-                break      
+                break
             except ValueError:
                 print("Enter a number for the attack.")
+
+    def enemy_choice(self):
+        choice = randint(1, len(self.enemy.attacks))
+        turn = Turn(self.enemy, self.hero)
+        turn.attack(choice)
+
+    def restart_battle(self):
+        restart_choice = input("Do you want to restart the battle? (yes/no): ").lower()
+        if restart_choice == 'yes':
+            self.enemy = self.original_enemy
+            self.hero.health = 100
+            self.start_battle()
+        else:
+            print("Thanks for playing!")
+
+    def choose_random_mini_boss(self):
+        mini_boss_classes = [MasterSplinter(), MasterShifu()]
+        return random.choice(mini_boss_classes)
                 
     def rat_king_choice(self):
         choice = randint(1, len(self.rat_king.attacks))
@@ -259,14 +298,6 @@ class Battle():
 
 
 def parse_args(args):
-    """Parse command-line arguments.
-
-    Args:
-        args (list): Command-line arguments
-
-    Returns:
-        args: The parsed command-line arguments
-    """
     parser = argparse.ArgumentParser(description="Turn-based adventure game with character choices.")
     parser.add_argument("--name", type=str, help="Name of the mousekateer.")
     parser.add_argument("--character_class", type=str, choices=["MagicRat", "RatFu", "SharpRat", "ShootyRat", "NakedRat"],
@@ -275,14 +306,37 @@ def parse_args(args):
     parser.add_argument("--damage", type=int, help="The amount of damage a character takes.")
     parser.add_argument("--weapon", type=str, help="Choose the weapon for the mousekateer.")
     parser.add_argument("--storyline_file", type=str, help="Path to the storyline file.")
+    parser.add_argument("--mini_boss", action="store_true", help="Fight Mini Bosses.")
 
-    
     return parser.parse_args(args)
+
+def choose_character_class():
+    print("Choose your character class:")
+    print("1. ShootyRat")
+    print("2. NakedRat")
+    print("3. MagicRat")
+    print("4. SharpRat")
+    print("5. RatFu")
+
+    while True:
+        try:
+            choice_num = int(input("Enter the number of your chosen class: "))
+            if 1 <= choice_num <= 5:
+                return ["ShootyRat", "NakedRat", "MagicRat", "SharpRat", "RatFu"][choice_num - 1]
+            else:
+                print("Invalid choice. Please enter a number between 1 and 5.")
+        except ValueError:
+            print("Invalid input. Please enter a number.")
 
 if __name__ == "__main__":
     Character.storyline()
     args = parse_args(sys.argv[1:])
+    
+    if args.character_class is None:
+        args.character_class = choose_character_class()
+
     character_class = args.character_class
+
     if character_class == "MagicRat":
         player = MagicRat(args.name)
     elif character_class == "RatFu":
@@ -295,9 +349,17 @@ if __name__ == "__main__":
         player = NakedRat(args.name)
     else:
         print("Invalid character class.")
+        sys.exit(1)
+
+    if args.mini_boss:
+        mini_boss = choice([MasterSplinter(), MasterShifu()])
+        battle_instance = Battle(player, mini_boss, args.storyline_file)
+        battle_instance.start_battle()
+    else:
+        print("Thanks for playing!")
 
     
-    enemy = RatKing()
+    # enemy = RatKing()
         
-    battle_instance = Battle(player, enemy, args.storyline_file)
-    battle_instance.start_battle()
+    # battle_instance = Battle(player, enemy, args.storyline_file)
+    # battle_instance.start_battle()
