@@ -232,7 +232,7 @@ class Battle:
         print(self.story)
 
         # Fight Mini Bosses first
-        for _ in range(2):  # Adjust the number of mini-boss battles as needed
+        for i in range(2):  # Adjust the number of mini-boss battles as needed
             self.enemy = self.choose_random_mini_boss()
             print(f"{self.hero.name} approaches {self.enemy.name} and readies their {self.hero.weapon}")
             while self.hero.alive() and self.enemy.alive():
@@ -240,8 +240,7 @@ class Battle:
             if not self.hero.alive():
                 print("You have died. Game Over.")
                 return
-
-        # Proceed to Rat King
+            
         self.enemy = self.original_enemy
         print(f"{self.hero.name} approaches the {self.enemy.name} and readies their {self.hero.weapon}")
         while self.hero.alive() and self.enemy.alive():
@@ -251,6 +250,7 @@ class Battle:
             print(f"The {self.enemy.name} has been defeated. You have won!")
         else:
             print("You have died. Game Over.")
+
 
     def turn(self):
         self.battle_status()
@@ -291,8 +291,8 @@ class Battle:
         return random.choice(mini_boss_classes)
                 
     def rat_king_choice(self):
-        choice = randint(1, len(self.rat_king.attacks))
-        turn = Turn(self.rat_king, self.hero)
+        choice = randint(1, len(self.enemy.attacks))
+        turn = Turn(self.enemy, self.hero)
         turn.attack(choice)
         
 
@@ -331,7 +331,7 @@ def choose_character_class():
 if __name__ == "__main__":
     Character.storyline()
     args = parse_args(sys.argv[1:])
-    
+
     if args.character_class is None:
         args.character_class = choose_character_class()
 
@@ -352,9 +352,20 @@ if __name__ == "__main__":
         sys.exit(1)
 
     if args.mini_boss:
-        mini_boss = choice([MasterSplinter(), MasterShifu()])
-        battle_instance = Battle(player, mini_boss, args.storyline_file)
-        battle_instance.start_battle()
+        # Fight Mini Bosses first
+        for i in range(0):  # Adjust the number of mini-boss battles as needed
+            mini_boss = choice([MasterSplinter(), MasterShifu()])
+            battle_instance = Battle(player, mini_boss, args.storyline_file)
+            battle_instance.start_battle()
+            if not player.alive():
+                break  # Exit if the player is defeated
+
+        # Proceed to Rat King if the player is still alive
+        if player.alive():
+            rat_king = RatKing()
+            battle_instance = Battle(player, rat_king, args.storyline_file)
+            battle_instance.start_battle()
+
     else:
         print("Thanks for playing!")
 
