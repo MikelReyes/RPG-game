@@ -79,7 +79,7 @@ class Character:
         while True:
             try:
                 choice = int(input("Choose an attack: "))
-                if 1 <= len(self.attacks):
+                if 1 <= choice <= len(self.attacks):
                     return choice
                 else:
                     print("Choose a valid attack.")
