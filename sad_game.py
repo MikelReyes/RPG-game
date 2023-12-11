@@ -8,9 +8,13 @@ import random
 
 """ 
 A turn based adventure game where the character will make choices that affect their final battle with the big boss.
+
+a quick note on the side: special weapons to be found in the story were added but the team did not have time to fully 
+impliment them in a working fashion. Parts of the code for these still exist but do not currently impact the story or battles.
 """
 class Attack:
-    """ 
+    """ Donovan Fitzpatrick                  
+                    
     Represents an attack with a name and power.
 
     Attributes:
@@ -29,7 +33,10 @@ class Attack:
         self.power = power
 
 class Character:
-    """ 
+    """ Donovan Fitzpatrick: init, show_attacks,choose attacks
+        Vivian Grev: Added def storyline() 
+                    Added def alive(self) 
+        
     Represents a character in the game with a name, health, and available attacks.
 
     Attributes:
@@ -86,7 +93,7 @@ class Character:
         return self.health > 0
         
 class MiniBoss(Character):
-    """ 
+    """ Mikel Reyes
     Represents a mini-boss character.
 
     Attributes:
@@ -99,8 +106,8 @@ class MiniBoss(Character):
 
 
 class MagicRat(Character):
-    """
-    Represents a magic-based character with unique attacks.
+    """ Mikel Reyes: __init__, cast_spell(), use_flamethrower
+        Vivian Grev: with open statement, print story
 
     Attributes:
     Inherits from Character and adds MagicRat-specific attributes.
@@ -149,14 +156,16 @@ class MagicRat(Character):
 
 
 class RatFu(Character):
-    """
+    """ Mikel Reyes: __init__, punch(), use_galvaknuckles
+        Vivian Grev: with open statement, print story
+        
     Represents a martial arts-based character with unique attacks.
 
     Attributes:
     Inherits from Character and adds RatFu-specific attributes.
     """
     def __init__(self, name, has_galvaknuckles=False, health=100):
-        """
+        """ 
         Initialize a RatFu object with a name, Galvaknuckles status, and optional health.
 
         Args:
@@ -196,7 +205,8 @@ class RatFu(Character):
             print(f"{self.name} does not have Galvaknuckles!")
 
 class SharpRat(Character):
-    """
+    """ Mikel Reyes: __init__, swing_sword(), use_excalibur
+        Vivian Grev: with open statement, print story
     Represents a sword-wielding character with unique attacks.
 
     Attributes:
@@ -244,7 +254,8 @@ class SharpRat(Character):
 
 
 class ShootyRat(Character):
-    """
+    """ Mikel Reyes: __init__, shoot_arrow(), use_ratolas
+        Vivian Grev: with open statement, print story
     Represents an archery-based character with unique attacks.
 
     Attributes:
@@ -290,7 +301,9 @@ class ShootyRat(Character):
             print(f"{self.name} does not have the sacred bow Ratolas!")
             
 class NakedRat(Character):
-    """
+    """ Mikel Reyes: __init__, dance(), use_invisibility_cloak
+        Vivian Grev: with open statement, print story
+        
     Represents a character without a weapon, using unique attacks.
 
     Attributes:
@@ -331,13 +344,13 @@ class NakedRat(Character):
             print(f"{self.name} does not have an invisibility cloak!")
             
 class MasterSplinter(MiniBoss):
-    """
+    """ Mikel Reyes
     Represents a mini-boss character named Master Splinter.
 
     Attributes:
     Inherits from MiniBoss and adds MasterSplinter-specific attacks.
     """
-    def __init__(self, health=50):
+    def __init__(self, health=25):
         """
         Initialize a MasterSplinter object with optional health.
 
@@ -349,13 +362,13 @@ class MasterSplinter(MiniBoss):
         self.attacks.append(Attack("Zen Meditation", power=randint(5, 10)))
 
 class MasterShifu(MiniBoss):
-    """
+    """ Mikel Reyes
     Represents a mini-boss character named Master Shifu.
 
     Attributes:
     Inherits from MiniBoss and adds MasterShifu-specific attacks.
     """
-    def __init__(self, health=50):
+    def __init__(self, health=25):
         """
         Initialize a MasterShifu object with optional health.
 
@@ -367,7 +380,7 @@ class MasterShifu(MiniBoss):
         self.attacks.append(Attack("Inner Peace Palm", power=randint(5, 12)))
 
 class RatKing(Character):
-    """
+    """ Donovan Fitzpatrick
     Represents the final boss character named Rat King.
 
     Attributes:
@@ -389,7 +402,8 @@ class RatKing(Character):
          
     
 class Turn:
-    """Making the turn-based combat system
+    """ Donovan Fitzpatrick
+    Making the turn-based combat system
     Attributes:
     __init__(attacker, target): Initializes a Turn object.
     attack(attack_choice): Damages the other character.
@@ -425,7 +439,10 @@ class Turn:
         
           
 class Battle:
-    """
+    """ Donovan Fitzpatrick -- Code referenced (https://codereview.stackexchange.com/questions/100852/pok%C3%A9mon-style-battle-game)
+                                reference code used to get an idea of how to class the different characters and elements of the turn based combat. 
+                                Additionally used to reference instantiating these elements in the battle.
+                                
     Represents a battle between a hero and an enemy with a storyline.
 
     Attributes:
@@ -450,7 +467,8 @@ class Battle:
         self.original_enemy = enemy  
 
     def start_battle(self):
-        """Initiates the battle and handles the turn-based combat."""
+        """Mikel Reyes - added mini boss elements
+        Initiates the battle and handles the turn-based combat."""
         print(self.story)
 
         
@@ -486,7 +504,7 @@ class Battle:
         self.enemy_choice()
 
     def battle_status(self):
-        """
+        """ 
         Display the current health status of the hero and the enemy.
         """
         print(f"{self.hero.name} (Health: {self.hero.health}) // {self.enemy.name} (Health: {self.enemy.health})")
@@ -521,7 +539,7 @@ class Battle:
         turn.attack(choice)
 
     def restart_battle(self):
-        """
+        """ Mikel Reyes
         Restart the battle if the player chooses to do so.
 
         Side effects: Prompts the player for a restart choice, resets the enemy
@@ -536,7 +554,7 @@ class Battle:
             print("Thanks for playing!")
 
     def choose_random_mini_boss(self):
-        """
+        """ Mikel Reyes
         Choose a random mini-boss from predefined mini-boss classes.
 
         Returns:
@@ -546,7 +564,7 @@ class Battle:
         return random.choice(mini_boss_classes)
                 
     def rat_king_choice(self):
-        """
+        """ 
         Determine the Rat King's choice of attack randomly and execute the chosen attack.
 
         Side effects: Calls methods to determine a random attack choice for the Rat King
@@ -559,7 +577,8 @@ class Battle:
 
 
 def parse_args(args):
-    """ 
+    """ Vivian Grev
+    
     Parse command-line arguments for the game.
 
     Args:
@@ -605,6 +624,7 @@ def choose_character_class():
             print("Invalid input. Please enter a number.")
 
 if __name__ == "__main__":
+    """ Vivian Grev, Donovan Fitzpatrick, Mikel Reyes """
     Character.storyline()
     args = parse_args(sys.argv[1:])
 
@@ -641,7 +661,7 @@ if __name__ == "__main__":
             battle_instance.start_battle()
 
     else:
-        print("Battle!")
+        print("Battle")
         
     enemy = RatKing()
     battle_instance = Battle(player, enemy, args.storyline_file)
