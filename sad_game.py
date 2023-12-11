@@ -434,7 +434,7 @@ class Battle:
     story (str): The storyline for the battle.
     original_enemy (Character): The original enemy character for restart.
     """
-    def __init__(self, hero, enemy, story, original_enemy):
+    def __init__(self, hero, enemy, story):
         """
         Initialize a Battle object with a hero, an enemy, and a storyline.
 
@@ -454,7 +454,7 @@ class Battle:
         print(self.story)
 
         
-        for i in range(2):  
+        for i in range(1):  
             self.enemy = self.choose_random_mini_boss()
             print(f"{self.hero.name} approaches {self.enemy.name} and readies their {self.hero.weapon}")
             while self.hero.alive() and self.enemy.alive():
@@ -641,4 +641,8 @@ if __name__ == "__main__":
             battle_instance.start_battle()
 
     else:
-        print("Thanks for playing!")
+        print("Battle!")
+        
+    enemy = RatKing()
+    battle_instance = Battle(player, enemy, args.storyline_file)
+    battle_instance.start_battle()
